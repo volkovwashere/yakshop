@@ -4,6 +4,7 @@ WORKDIR /yakshop/
 
 COPY src /yakshop/src/
 COPY logs /yakshop/logs/
+COPY fake_db /yakshop/fake_db/
 COPY properties /yakshop/properties/
 COPY requirements.txt /yakshop/requirements.txt
 RUN pip install -r /yakshop/requirements.txt
