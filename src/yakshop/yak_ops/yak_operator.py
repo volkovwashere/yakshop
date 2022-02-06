@@ -71,7 +71,7 @@ class YakOperator(object):
         on_stock = self.calculate_stock(dt=dt)
         milk_available = on_stock["milk"] - self.milk_delivered
         wool_available = on_stock["wool"] - self.wool_delivered
-        print(self.wool_delivered, " ", self.milk_delivered)
+
         milk_deliverable = milk_ordered if (milk_available - milk_ordered) >= 0 else 0
         wool_deliverable = wool_ordered if (wool_available - wool_ordered) >= 0 else 0
 
@@ -110,12 +110,14 @@ class YakOperator(object):
             return 0
 
     def _calculate_milk_over_time(self, dt: int, age_in_days: float) -> float:
-        if dt <= 1:
-            return self._calculate_milk(age_in_days=age_in_days)
-        else:
-            return self._calculate_milk(
-                age_in_days=age_in_days
-            ) + self._calculate_milk_over_time(dt=dt - 1, age_in_days=age_in_days + 1)
+        # set a limit to dt
+        dt = 1000 - age_in_days if age_in_days + dt > 1000 else dt
+        milk_produced = 0
+
+        for i in range(int(dt)):
+            milk_produced += self._calculate_milk(age_in_days)
+            age_in_days += 1
+        return milk_produced
 
     @staticmethod
     def _calculate_age(age_in_days: float, dt: int) -> float:

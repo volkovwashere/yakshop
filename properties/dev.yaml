@@ -1,4 +1,2 @@
-data_path: "D:/klippa-ml-assessment/train"
-is_training: True
-save: True
-save_to_path: "ml-assets/data/results.csv"
+data_path: "fake_db/herd.xml"
+environment: "dev"

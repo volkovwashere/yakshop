@@ -4,9 +4,10 @@ import logging
 from yakshop.yak_ops.yak_operator import YakOperator
 from yakshop.utils.config import get_root_path
 from yakshop.utils.schemas import YakStock, Herd, YakOrder
+from yakshop.utils.config import read_yaml
 
-
-yak_op = YakOperator.init_herd(os.path.join(get_root_path(), "fake_db/herd.xml"))
+config = read_yaml(root_path=get_root_path())
+yak_op = YakOperator.init_herd(os.path.join(get_root_path(), config["data_path"]))
 router = APIRouter()
 classifier_route_logger = logging.getLogger("classifier.classifier")
 
