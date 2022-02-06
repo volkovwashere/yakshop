@@ -13,17 +13,43 @@ classifier_route_logger = logging.getLogger("classifier.classifier")
 
 
 @router.get(path="/stock/{dt}", tags=["Stock"], response_model=YakStock)
-async def get_stock(dt: int):
+async def get_stock(dt: int) -> dict:
+    """
+    This GET endpoint returns the available stock amount of wool skin and milk produced based on the elapsed time.
+    Args:
+        dt (int): Elapsed time.
+
+    Returns (dict): Returns YakStock response body.
+
+    """
     return yak_op.calculate_stock(dt=dt)
 
 
 @router.get(path="/herd/{dt}", tags=["Herd"], response_model=Herd)
-async def get_herd(dt: int):
+async def get_herd(dt: int) -> dict:
+    """
+    This GET endpoint returns the name, age and the last shaved time for yaks over a given period of elapsed time given
+    as a parameter.
+    Args:
+        dt (int): Elapsed time.
+
+    Returns (dict): Herd response body.
+
+    """
     return {"herd": yak_op.herd_state_after_t_days(dt=dt)}
 
 
 @router.post(path="/order/{t}", tags=["Order"])
 async def order_from_stock(req: YakOrder, t: int):
+    """
+    This POST request handles the order and returns the deliverable amount. It either return 201, 206 or 404.
+    Args:
+        req (YakOrder): Request body schema
+        t (int): Day of the order.
+
+    Returns (dict): Returns the deliverable milk or status code.
+
+    """
     milk, wool = req.order.milk, req.order.wool
     milk_available, wool_available = yak_op.pack_order(
         milk_ordered=milk, wool_ordered=wool, dt=t
