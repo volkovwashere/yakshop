@@ -1,2 +1,0 @@
-# yakshop
-Techincal assesment yakshop
