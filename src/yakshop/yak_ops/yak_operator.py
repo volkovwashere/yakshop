@@ -22,7 +22,7 @@ class YakOperator(object):
             dt % (8 + age_in_days * 0.01) == 0 if 100 < age_in_days <= 1000 else False
         )
 
-    def calculate_stock(self, dt: int):
+    def calculate_stock(self, dt: int) -> dict:
         amount_of_milk = (
             self._calculate_milk_over_time(dt=dt, age_in_days=float(yak["age"]) * 100)
             for yak in self.herd
