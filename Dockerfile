@@ -1,14 +1,13 @@
 FROM python:3.8-slim
 
-WORKDIR /invoice-reader/
+WORKDIR /yakshop/
 
-COPY src /invoice-reader/src/
-COPY logs /invoice-reader/logs/
-COPY properties /invoice-reader/properties/
-COPY ml-assets /invoice-reader/ml-assets/
-COPY requirements.txt /invoice-reader/requirements.txt
-RUN pip install -r /invoice-reader/requirements.txt
-ENV PYTHONPATH "${PYTHONPATH}:/invoice-reader/src"
+COPY src /yakshop/src/
+COPY logs /yakshop/logs/
+COPY properties /yakshop/properties/
+COPY requirements.txt /yakshop/requirements.txt
+RUN pip install -r /yakshop/requirements.txt
+ENV PYTHONPATH "${PYTHONPATH}:/yakshop/src"
 
 
-CMD python invoice_reader/main.py
+CMD uvicorn --host=0.0.0.0 --port=8000 yakshop.app:app
